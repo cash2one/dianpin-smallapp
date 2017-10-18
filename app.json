@@ -1,0 +1,12 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/logs/logs"
+  ],
+  "window":{
+    "backgroundTextStyle":"dark",
+    "navigationBarBackgroundColor": "#FFBC42",
+    "navigationBarTitleText": "点评生成器",
+    "navigationBarTextStyle":"white"
+  }
+}

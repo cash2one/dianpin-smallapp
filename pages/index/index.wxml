@@ -1,0 +1,17 @@
+<!--index.wxml-->
+
+<view class="container">
+  <image style="width: 300px; height: 300px;" mode='scaleToFill' bindtap="bindViewTap" class="banner_pic" src="/resources/meal1.jpg" background-size="cover"></image>
+  <view class="userinfo">
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 生成今日评论 </button>
+    <block wx:else>
+      <view class="userstuff">
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+      <text class="user-motto">{{motto}}</text>
+      </view>
+      
+    </block>
+  </view>
+  
+</view>

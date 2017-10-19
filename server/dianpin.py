@@ -15,6 +15,8 @@ from keras.utils.data_utils import get_file
 import keras
 import random
 
+import sys
+print(sys.getdefaultencoding())
 
 # ## 一些文字处理函数
 
@@ -176,7 +178,8 @@ if __name__ == '__main__':
 	# In[4]:
 
 	print('our original text has ' + str(len(text)) + ' characters')
-	text = unicode(text,'utf-8')
+	
+	
     
 	# In[5]:
 

@@ -176,8 +176,7 @@ if __name__ == '__main__':
 	# In[4]:
 
 	print('our original text has ' + str(len(text)) + ' characters')
-
-    text = unicode(text,'utf-8')
+	text = unicode(text,'utf-8')
     
 	# In[5]:
 

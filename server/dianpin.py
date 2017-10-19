@@ -124,18 +124,10 @@ def predict_next_chars(model,num_to_predict,window_size,chars_to_indices,indices
         
         found = False
         for w in top_words:
-            if w not in predicted_chars[-10:]:
-                if input_chars[-1:]+w in text:
-                    predicted_chars += w
-                    input_chars+=w
-                    input_chars = input_chars[1:]
-                    
-                else:
-                    new_w = predict_next_chars_model2(model2,input_chars[-3:],1)
-                    predicted_chars += new_w
-                    input_chars += new_w
-                    input_chars = input_chars[1:]
-                    
+            if w not in predicted_chars[-15:]:
+                predicted_chars += w
+                input_chars+=w
+                input_chars = input_chars[1:]    
                 found = True
                 break
         
@@ -150,8 +142,6 @@ def predict_next_chars(model,num_to_predict,window_size,chars_to_indices,indices
             
     return head_text + predicted_chars
 
-
-# In[47]:
 
 
 
@@ -231,48 +221,6 @@ if __name__ == '__main__':
 	
 	
 
-	
-	with io.open("./resources/dict.txt", "r", encoding="utf-8") as my_file:
-		 text2 = my_file.read() 
-	my_file.close()
-
-	text2 = text2.replace(u'\xa0','')
-	text2 = text2.replace(u'    ','')
-	text2 = text2.replace(u'\n','')
-	#去除emoj表情和一些很奇怪的隐藏符号
-	text2 = "".join(re.findall(u'[a-z0-9\w\u2E80-\u9FFF，。！？\-\\.\!\?\;\:\'\#]*',text2))
-	text2 = text2[:int(math.ceil(len(text2)*0.15))]
-	print(len(text2))
-
-	chars2 = sorted(list(set(text2)))
-	print ("this corpus has " +  str(len(chars2)) + " unique characters")
-	# this dictionary is a function mapping each unique character to a unique integer
-	chars_to_indices2 = dict((c, i) for i, c in enumerate(chars2))  # map each unique character to unique integer
-
-	# this dictionary is a function mapping each unique integer back to a unique character
-	indices_to_chars2 = dict((i, c) for i, c in enumerate(chars2))  # map each unique integer back to unique character
-
-
-	# In[14]:
-
-	window_size2 = 3
-	step_size2 = 1
-	X2,y2 = encode_io_pairs(text2,window_size2,step_size2,chars_to_indices2)
-
-
-	# In[15]:
-
-	model2 = Sequential()
-	model2.add(LSTM(128, input_shape=(window_size2,len(chars2))))
-	#model.add(Dropout(0,2))
-	model2.add(Dense(len(chars2),activation='softmax'))
-
-	optimizer2 = keras.optimizers.RMSprop(lr=0.001, rho=0.9, epsilon=1e-08, decay=1e-06)
-	model2.compile(loss='categorical_crossentropy', optimizer=optimizer2)
-
-
-	model.load_weights('./resources/best_RNN_textdata_weights.hdf5')
-	model2.load_weights('./resources/best_RNN2_textdata_weights.hdf5')
 
 	#final Output
 	print(predict_next_chars(model,80,window_size,chars_to_indices,indices_to_chars,chars))

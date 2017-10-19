@@ -197,6 +197,7 @@ if __name__ == '__main__':
 
 	text = text[int(math.ceil(len(text)*0.75)):]
 	print(len(text))
+	print(text[:1000])
 
 
 	# In[9]:
@@ -223,6 +224,7 @@ if __name__ == '__main__':
 
 	optimizer = keras.optimizers.RMSprop(lr=0.001, rho=0.9, epsilon=1e-08, decay=1e-06)
 	model.compile(loss='categorical_crossentropy', optimizer=optimizer)
+	
 	
 
 	

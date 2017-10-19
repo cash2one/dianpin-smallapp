@@ -177,7 +177,8 @@ if __name__ == '__main__':
 
 	print('our original text has ' + str(len(text)) + ' characters')
 
-
+    text = unicode(text,'utf-8')
+    
 	# In[5]:
 
 	text = text.replace(u'\xa0','')

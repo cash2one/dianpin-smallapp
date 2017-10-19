@@ -197,7 +197,7 @@ if __name__ == '__main__':
 
 	text = text[int(math.ceil(len(text)*0.75)):]
 	print(len(text))
-	print(text[:1000])
+	print(str(text[:1000]))
 
 
 	# In[9]:

@@ -17,6 +17,8 @@ import random
 
 import sys
 print(sys.getdefaultencoding())
+reload(sys) 
+sys.setdefaultencoding('utf8') 
 
 # ## 一些文字处理函数
 

@@ -69,7 +69,7 @@ def encode_io_pairs(text,window_size,step_size,chars_to_indices):
 
 # In[46]:
 
-def predict_next_chars(model,num_to_predict,window_size,chars_to_indices,indices_to_chars,chars):     
+def predict_next_chars(text,model,num_to_predict,window_size,chars_to_indices,indices_to_chars,chars):     
     # create output
     predicted_chars = ''
     
@@ -198,7 +198,7 @@ def test_output():
 
 
 	#final Output
-	return(predict_next_chars(model,30,window_size,chars_to_indices,indices_to_chars,chars))
+	return(predict_next_chars(text,model,30,window_size,chars_to_indices,indices_to_chars,chars))
 	
 	
 	

@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 model = None
 @app.route('/dianpin')
-def dianpin():
+def create_model():
 	model = dianpin.Dianpin()
 	model.model_built()
 	

@@ -14,8 +14,8 @@ def create_model():
 @app.route('/predict')
 def predict():
 	global model
-    return model.final_predict()
+	return model.final_predict()
 
 @app.route('/')
 def hello_world():
-    return 'Hello, World!'
+	return 'Hello, World!'

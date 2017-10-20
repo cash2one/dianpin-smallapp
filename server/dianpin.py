@@ -14,6 +14,10 @@ from keras.optimizers import RMSprop
 from keras.utils.data_utils import get_file
 import keras
 import random
+from keras import backend as K
+
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 
 import sys
 print(sys.getdefaultencoding())
@@ -60,33 +64,7 @@ def encode_io_pairs(text,window_size,step_size,chars_to_indices):
 
 # ## 文本处理
 
-# In[3]:
 
-
-
-# In[28]:
-
-def predict_next_chars_model2(model,input_chars,num_to_predict):     
-    # create output
-    predicted_chars = ''
-    for i in range(num_to_predict):
-        # convert this round's predicted characters to numerical input    
-        x_test = np.zeros((1, window_size2, len(chars2)))
-        for t, char in enumerate(input_chars):
-            x_test[0, t, chars_to_indices2[char]] = 1.
-
-        # make this round's prediction
-        test_predict = model.predict(x_test,verbose = 0)[0]
-        
-        # translate numerical prediction back to characters
-        r = np.argmax(test_predict)                           # predict class of each test input
-        d = indices_to_chars2[r] 
-
-        # update predicted_chars and input
-        predicted_chars+=d
-        input_chars+=d
-        input_chars = input_chars[1:]
-    return predicted_chars
 
 
 # In[46]:
@@ -103,7 +81,9 @@ def predict_next_chars(model,num_to_predict,window_size,chars_to_indices,indices
             input_chars = input_chars[:7]
         elif len(input_chars) < 7:
             input_chars = random.choice(back_texts)
+            
     head_text = input_chars  
+    
     for i in range(num_to_predict):
         # convert this round's predicted characters to numerical input    
         x_test = np.zeros((1, window_size, len(chars)))
@@ -121,10 +101,10 @@ def predict_next_chars(model,num_to_predict,window_size,chars_to_indices,indices
             top_words.append(d)
             test_predict = test_predict[test_predict != np.max(test_predict)]
             n+=1
-        
+            
         found = False
         for w in top_words:
-            if w not in predicted_chars[-15:]:
+            if w not in predicted_chars[-3:] and input_chars[-2:]+w in text:
                 predicted_chars += w
                 input_chars+=w
                 input_chars = input_chars[1:]    
@@ -132,12 +112,12 @@ def predict_next_chars(model,num_to_predict,window_size,chars_to_indices,indices
                 break
         
         if not found: 
-            predict_word = predict_next_chars(model,input_chars,1,window_size,chars_to_indices,indices_to_chars,chars)
-            predicted_chars += predict_word
-            input_chars += predict_word
+            #print("not found")
+            predicted_chars += top_words[0]
+            input_chars += top_words[0]
             input_chars = input_chars[1:]
         
-        if input_chars[-1] == '。' and len(input_chars) > 80:
+        if input_chars[-1] == '。' and len(input_chars) > 25:
             break
             
     return head_text + predicted_chars
@@ -219,8 +199,9 @@ if __name__ == '__main__':
 	optimizer = keras.optimizers.RMSprop(lr=0.001, rho=0.9, epsilon=1e-08, decay=1e-06)
 	model.compile(loss='categorical_crossentropy', optimizer=optimizer)
 	
-	
+	model.load_weights('./resources/best_RNN_textdata_weights.hdf5')
 
 
 	#final Output
-	print(predict_next_chars(model,80,window_size,chars_to_indices,indices_to_chars,chars))
+	print(predict_next_chars(model,30,window_size,chars_to_indices,indices_to_chars,chars))
+	

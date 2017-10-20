@@ -69,7 +69,7 @@ def encode_io_pairs(text,window_size,step_size,chars_to_indices):
 
 # In[46]:
 
-def predict_next_chars(text,model,num_to_predict,window_size,chars_to_indices,indices_to_chars,chars):     
+def predict_next_chars(model,num_to_predict,window_size,chars_to_indices,indices_to_chars,chars):     
     # create output
     predicted_chars = ''
     
@@ -135,8 +135,12 @@ def predict_next_chars(text,model,num_to_predict,window_size,chars_to_indices,in
 # In[16]:
 
 
-def test_output():
 
+
+if __name__ == '__main__':
+	
+	
+	
 	with io.open("./resources/dict.txt", "r", encoding="utf-8") as my_file:
 		 text = my_file.read() 
 	my_file.close()
@@ -167,6 +171,7 @@ def test_output():
 
 	text = text[int(math.ceil(len(text)*0.75)):]
 	print(len(text))
+	print(str(text[:1000]))
 
 
 	# In[9]:
@@ -183,7 +188,7 @@ def test_output():
 
 	window_size = 7
 	step_size = 2
-	X,y = encode_io_pairs(text,window_size,step_size,chars_to_indices)
+	#X,y = encode_io_pairs(text,window_size,step_size,chars_to_indices)
 
 
 
@@ -198,8 +203,5 @@ def test_output():
 
 
 	#final Output
-	return(predict_next_chars(text,model,30,window_size,chars_to_indices,indices_to_chars,chars))
-	
-	
-	
+	print(predict_next_chars(model,30,window_size,chars_to_indices,indices_to_chars,chars))
 	

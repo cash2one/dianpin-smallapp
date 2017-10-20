@@ -1,14 +1,17 @@
 from flask import Flask
-from server import dianpin_class
+from server import dianpin
 
 app = Flask(__name__)
+
+model = None
 @app.route('/dianpin')
 def dianpin():
-    return dianpin_class.test_output()
-
-@app.route('/ye')
-def ye():
-    return 'Ye Big Face'
+	model = dianpin.Dianpin()
+	model.model_built()
+	
+@app.route('/predict')
+def predict():
+    return model.final_predict()
 
 @app.route('/')
 def hello_world():

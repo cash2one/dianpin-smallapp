@@ -8,6 +8,7 @@ model = None
 def create_model():
 	model = dianpin.Dianpin()
 	model.model_built()
+	return "Model Loaded"
 	
 @app.route('/predict')
 def predict():

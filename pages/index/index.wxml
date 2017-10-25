@@ -1,17 +1,21 @@
 <!--index.wxml-->
 
 <view class="container">
-  <image style="width: 300px; height: 300px;" mode='scaleToFill' bindtap="bindViewTap" class="banner_pic" src="/resources/meal1.jpg" background-size="cover"></image>
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 生成今日评论 </button>
-    <block wx:else>
-      <view class="userstuff">
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-      <text class="user-motto">{{motto}}</text>
-      </view>
-      
-    </block>
+  <image style="width:{{imageWidth}}px;height:{{imageheight}}px;margin-bottom:20px" mode='widthFix' bindload="cusImageLoad" class="banner_pic" src="/resources/meal1.jpg" background-size="cover"></image>
+  <view >
+    <loading wx:if="{{showLoading}}">点评AI计算中...</loading>
+</view>
+  <view class="tips_block">
+    <button bindtap="cPredict" style="width:{{imageWidth*0.8}}px; opacity: {{opacity}};color: white; font-size:18px;background-color: #ff8719; margin-top:15px" size = "default" > {{buttonText}} </button>
+    <text class="user-motto" style = "color: #484848;font-size:16px;font-weight:bold;display:inline;padding-top:25px;" >{{motto}}</text>
   </view>
-  
+
+    <view class="comments_block">
+    <text class="user-comment" style = "color: #484848;font-size:16px; margin-top:5px;margin-left:40px;margin-right:40px;margin-bottom:10px;" >{{comments}}</text>
+  </view>
+
+  <view class="names_block">
+    <text class="developer" style = "color: #9B9B9B;font-size:12px;padding-top:25px;margin-left:150px" >无聊开发者：然 & 饼ye</text>
+    <text class="designer" style = "color: #9B9B9B;font-size:12px;margin-left:150px" >吃不胖设计师：不豆</text>
+  </view>
 </view>

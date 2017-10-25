@@ -1,13 +1,12 @@
 //index.js
 //获取应用实例
 const app = getApp()
+var WxAutoImage = require('../../utils/WxAutoImage.js');
 
 Page({
   data: {
-    motto: '生成一句话点评',
-    userInfo: {},
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    cGenerator: app.globalData.cGenerator,
+    showLoading:false
   },
   //事件处理函数
   bindViewTap: function() {
@@ -16,44 +15,46 @@ Page({
     })
   },
   onLoad: function () {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true,
-        motto: '，今天点评是'
+    var that = this;
+    that.setData({
+        motto: '今天点评是',
+        buttonText: "懒得写评论？猛击我"
       })
-    } else if (this.data.canIUse){
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true,
-          motto: '，今天点评是'
-        })
-          
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true,
-            motto: '，今天点评是'
+  },
+  cusImageLoad: function (e) {
+    var that = this;
+    //这里看你在wxml中绑定的数据格式 单独取出自己绑定即可
+    that.setData(WxAutoImage.wxAutoImageCal(e));
+  },
+
+
+  cPredict: function (e) {
+    var that = this;
+    if (!app.globalData.cGenerator) {
+      console.log(e),
+      that.setData({
+        motto: 'AI借鉴过众多美食点评后，生产专属您的评论',
+        buttonText: '不适合？再折磨AI一下',
+        showLoading:true
+      }),
+      app.globalData.cGenerator = true
+    }
+    else {
+      that.setData({
+        buttonText:'不适合？再折磨AI一下',
+        motto: 'AI借鉴过众多美食点评后，生产专属您的评论',
+        showLoading:true
+      })
+    }
+    wx.request(
+      {
+        url: 'http://101.132.160.113:45723/predict',
+        success: function (res) {
+          that.setData({
+            comments: res.data,
+            showLoading:false
           })
         }
       })
-    }
-  },
-  getUserInfo: function(e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true,
-      motto: '，今天点评是'
-    })
   }
 })

@@ -5,7 +5,7 @@
   ],
   "window":{
     "backgroundTextStyle":"dark",
-    "navigationBarBackgroundColor": "#FFBC42",
+    "navigationBarBackgroundColor": "#ff8719",
     "navigationBarTitleText": "点评生成器",
     "navigationBarTextStyle":"white"
   }

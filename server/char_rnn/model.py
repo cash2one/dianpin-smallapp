@@ -97,8 +97,14 @@ class CharRNN:
         # 使用clipping gradients
         tvars = tf.trainable_variables()
         grads, _ = tf.clip_by_global_norm(tf.gradients(self.loss, tvars), self.grad_clip)
+        
+        global_step = tf.Variable(0, trainable=False)
+        
+        learning_rate = tf.train.exponential_decay(self.learning_rate, global_step,
+ 		5000, 0.96, staircase=True)
+        
         train_op = tf.train.AdamOptimizer(self.learning_rate)
-        self.optimizer = train_op.apply_gradients(zip(grads, tvars))
+        self.optimizer = train_op.apply_gradients(zip(grads, tvars),global_step=global_step)
 
     def train(self, batch_generator, max_steps, save_path, save_every_n, log_every_n):
         self.session = tf.Session()

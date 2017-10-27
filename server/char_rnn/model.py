@@ -34,6 +34,7 @@ class CharRNN:
         self.train_keep_prob = train_keep_prob
         self.use_embedding = use_embedding
         self.embedding_size = embedding_size
+        self.lr = None
 
         tf.reset_default_graph()
         self.build_inputs()
@@ -100,11 +101,12 @@ class CharRNN:
         
         global_step = tf.Variable(0, trainable=False)
         
-        lr = tf.train.exponential_decay(self.learning_rate, global_step,
- 		5000, 0.96, staircase=True)
+        self.lr = tf.train.exponential_decay(self.learning_rate, global_step,
+ 		5000, 0.97, staircase=True)
         
-        train_op = tf.train.AdamOptimizer(lr)
+        train_op = tf.train.AdamOptimizer(self.lr)
         self.optimizer = train_op.apply_gradients(zip(grads, tvars),global_step=global_step)
+
 
     def train(self, batch_generator, max_steps, save_path, save_every_n, log_every_n):
         self.session = tf.Session()
@@ -124,7 +126,6 @@ class CharRNN:
                                                      self.final_state,
                                                      self.optimizer],
                                                     feed_dict=feed)
-
                 end = time.time()
                 # control the print lines
                 if step % log_every_n == 0:

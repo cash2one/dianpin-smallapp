@@ -101,7 +101,7 @@ class CharRNN:
         global_step = tf.Variable(0, trainable=False)
         
         lr = tf.train.exponential_decay(self.learning_rate, global_step,
- 		5000, 0.96, staircase=True)
+ 		2000, 0.97, staircase=True)
         
         train_op = tf.train.AdamOptimizer(lr)
         self.optimizer = train_op.apply_gradients(zip(grads, tvars),global_step=global_step)

@@ -1,5 +1,5 @@
 from flask import Flask
-from server import dianpin
+from server.char_rnn import simple
 
 app = Flask(__name__)
 global model

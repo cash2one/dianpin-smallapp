@@ -40,13 +40,13 @@ class Dianpin(Singleton):
         if os.path.isdir(FLAGS.checkpoint_path):
             FLAGS.checkpoint_path =\
                 tf.train.latest_checkpoint(FLAGS.checkpoint_path)
-        self.tfmodel = CharRNN(converter.vocab_size, sampling=True,
+        self.tfmodel = CharRNN(self.converter.vocab_size, sampling=True,
                     lstm_size=FLAGS.lstm_size, num_layers=FLAGS.num_layers,
                     use_embedding=FLAGS.use_embedding,
                     embedding_size=FLAGS.embedding_size)
         self.tfmodel.load(FLAGS.checkpoint_path)
         
-    def sample():
+    def final_predict(self):
         start = self.converter.text_to_arr(FLAGS.start_string)
         arr = self.tfmodel.sample(FLAGS.max_length, start, self.converter.vocab_size)
         return self.converter.arr_to_text(arr)

@@ -43,7 +43,7 @@ class Dianpin(Singleton):
             if os.path.isdir(FLAGS.checkpoint_path):
                FLAGS.checkpoint_path =\
                 tf.train.latest_checkpoint(FLAGS.checkpoint_path)
-            tfmodel = CharRNN(self.converter.vocab_size, sampling=True,
+            tfmodel = CharRNN(converter.vocab_size, sampling=True,
                         lstm_size=FLAGS.lstm_size, num_layers=FLAGS.num_layers,
                         use_embedding=FLAGS.use_embedding,
                         embedding_size=FLAGS.embedding_size)
@@ -52,6 +52,6 @@ class Dianpin(Singleton):
         
     def final_predict(self,foodType,start_str=FLAGS.start_string):
         start = self.type_mode_cov[foodType][0].text_to_arr(start_str)
-        arr = self.type_mode_cov[foodType][1].sample(FLAGS.max_length, start, self.converter.vocab_size)
+        arr = self.type_mode_cov[foodType][1].sample(FLAGS.max_length, start, self.type_mode_cov[foodType][0].vocab_size)
         return self.type_mode_cov[foodType][0].arr_to_text(arr)
  

@@ -12,7 +12,7 @@ def predict():
 	global tfmodel
 	return tfmodel.final_predict()
 
-@app.route('/predict/<cusStr1,cusStr2>')
+@app.route('/predict/<cusStr1>/<cusStr2>')
 def predictWithStr(cusStr1,cusStr2):
 	global tfmodel
 	return tfmodel.final_predict(cusStr1,cusStr2)

@@ -30,7 +30,7 @@ class Singleton(object):
 
 class Dianpin(Singleton):
     def __init__(self):
-        self.types = ['afternoontea','hnfood','shfood','bbq','brunch','jpfood','koreanfood',
+        self.types = ['afternoontea','hnfood','shfood','brunch','jpfood','koreanfood',
                       'seafood','szchan','yuecai']
         self.type_mod_cov = {}
 
@@ -53,7 +53,7 @@ class Dianpin(Singleton):
             self.type_mod_cov[t] = [converter,tfmodel]
         
     def final_predict(self,foodType,start_str=FLAGS.start_string):
-        start = self.type_mode_cov[foodType][0].text_to_arr(start_str)
-        arr = self.type_mode_cov[foodType][1].sample(FLAGS.max_length, start, self.type_mode_cov[foodType][0].vocab_size)
-        return self.type_mode_cov[foodType][0].arr_to_text(arr)
+        start = self.type_mod_cov[foodType][0].text_to_arr(start_str)
+        arr = self.type_mod_cov[foodType][1].sample(FLAGS.max_length, start, self.type_mode_cov[foodType][0].vocab_size)
+        return self.type_mod_cov[foodType][0].arr_to_text(arr)
  

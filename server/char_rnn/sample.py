@@ -54,6 +54,6 @@ class Dianpin(Singleton):
         
     def final_predict(self,foodType,start_str=FLAGS.start_string):
         start = self.type_mod_cov[foodType][0].text_to_arr(start_str)
-        arr = self.type_mod_cov[foodType][1].sample(FLAGS.max_length, start, self.type_mode_cov[foodType][0].vocab_size)
+        arr = self.type_mod_cov[foodType][1].sample(FLAGS.max_length, start, self.type_mod_cov[foodType][0].vocab_size)
         return self.type_mod_cov[foodType][0].arr_to_text(arr)
  

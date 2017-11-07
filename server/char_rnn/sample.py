@@ -46,8 +46,8 @@ class Dianpin(Singleton):
                     embedding_size=FLAGS.embedding_size)
         self.tfmodel.load(FLAGS.checkpoint_path)
         
-    def final_predict(self):
-        start = self.converter.text_to_arr(FLAGS.start_string)
+    def final_predict(self,start_str=FLAGS.start_string):
+        start = self.converter.text_to_arr(start_str)
         arr = self.tfmodel.sample(FLAGS.max_length, start, self.converter.vocab_size)
         return self.converter.arr_to_text(arr)
-
+ 

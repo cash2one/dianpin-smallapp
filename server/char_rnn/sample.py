@@ -38,18 +38,17 @@ class Dianpin(Singleton):
         for t in self.types:
             tf.flags.DEFINE_string('converter_path', 'model/'+t+'/converter.pkl', 'model/name/converter.pkl')
             tf.flags.DEFINE_string('checkpoint_path', 'model/'+t, 'checkpoint path')
-			FLAGS.start_string = FLAGS.start_string.decode('utf-8')
-			converter = TextConverter(filename=FLAGS.converter_path)
-			if os.path.isdir(FLAGS.checkpoint_path):
-				FLAGS.checkpoint_path =\
-					tf.train.latest_checkpoint(FLAGS.checkpoint_path)
-			tfmodel = CharRNN(self.converter.vocab_size, sampling=True,
-						lstm_size=FLAGS.lstm_size, num_layers=FLAGS.num_layers,
-						use_embedding=FLAGS.use_embedding,
-						embedding_size=FLAGS.embedding_size)
-			tfmodel.load(FLAGS.checkpoint_path)
-			
-			self.type_mod_cov[t] = [converter,tfmodel]
+            FLAGS.start_string = FLAGS.start_string.decode('utf-8')
+            converter = TextConverter(filename=FLAGS.converter_path)
+            if os.path.isdir(FLAGS.checkpoint_path):
+               FLAGS.checkpoint_path =\
+                tf.train.latest_checkpoint(FLAGS.checkpoint_path)
+            tfmodel = CharRNN(self.converter.vocab_size, sampling=True,
+                        lstm_size=FLAGS.lstm_size, num_layers=FLAGS.num_layers,
+                        use_embedding=FLAGS.use_embedding,
+                        embedding_size=FLAGS.embedding_size)
+            tfmodel.load(FLAGS.checkpoint_path)
+            self.type_mod_cov[t] = [converter,tfmodel]
         
     def final_predict(self,foodType,start_str=FLAGS.start_string):
         start = self.type_mode_cov[foodType][0].text_to_arr(start_str)

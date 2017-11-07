@@ -12,9 +12,10 @@ def predict():
 	global tfmodel
 	return tfmodel.final_predict()
 
-@app.route('/predict/<cusStr1>/<cusStr2>')
-def predictWithStr(cusStr1,cusStr2):
+@app.route('/predict/<cusStr>')
+def predictWithStr(cusStr):
 	global tfmodel
+	cusStr1,cusStr2 = cusStr.split('%')
 	return tfmodel.final_predict(cusStr1,cusStr2)
 
 if __name__ == '__main__':

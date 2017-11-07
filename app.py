@@ -13,9 +13,9 @@ def predict():
 	return tfmodel.final_predict()
 
 @app.route('/predict/<cusStr>')
-def predictWithStr(cusStr):
+def predictWithStr(cusStr1,cusStr2):
 	global tfmodel
-	return tfmodel.final_predict(cusStr)
+	return tfmodel.final_predict(cusStr1,cusStr2)
 
 if __name__ == '__main__':
 	global tfmodel

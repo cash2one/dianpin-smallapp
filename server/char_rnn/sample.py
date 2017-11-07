@@ -30,7 +30,7 @@ class Singleton(object):
 
 class Dianpin(Singleton):
     def __init__(self):
-        self.types = ['afternoonTea','hnfood','shfood','bbq','brunch','jpfood','koreanfood',
+        self.types = ['afternoontea','hnfood','shfood','bbq','brunch','jpfood','koreanfood',
                       'seafood','szchan','yuecai']
         self.type_mod_cov = {}
 

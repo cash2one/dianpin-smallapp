@@ -12,6 +12,11 @@ def predict():
 	global tfmodel
 	return tfmodel.final_predict()
 
+@app.route('/predict/<cusStr>')
+def predictWithStr(cusStr):
+	global tfmodel
+	return tfmodel.final_predict(cusStr)
+
 if __name__ == '__main__':
 	global tfmodel
 	app.run('0.0.0.0', port = 45723)
